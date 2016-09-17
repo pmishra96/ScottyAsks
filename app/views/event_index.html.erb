@@ -1,0 +1,64 @@
+<div class="uk-grid" data-uk-grid-margin="">
+
+    <div class="uk-width-medium-10-10 uk-row-first">
+        <div class="uk-grid" data-uk-grid-margin="">
+            <div class="uk-width-medium-2-10">
+                <h1 class="uk-text-primary"> All Events</h1>
+            </div>
+            <div id="esearch" class="uk-width-medium-2-10 ">
+                <div class="uk-form-icon  uk-autocomplete uk-float-left" data-uk-autocomplete="{source:'/event_pick.json'}">
+                <i class="uk-icon-search"></i>
+                <input type="text" class="uk-form-large uk-width-1-1 " placeholder="search">
+                <script type="text/autocomplete">
+                    <ul class="uk-nav uk-nav-autocomplete uk-autocomplete-results">
+                        {{~items}}
+                        <li data-value="{{ $item.value }}">
+                            <a href="/events/{{ $item.id }}">
+                                {{ $item.value }}
+                                <div>{{{ $item.location }}}</div>
+                            </a>
+                        </li>
+                        {{/items}}
+                    </ul>
+                </script>
+                </div>
+            </div>
+            <div  class="uk-width-medium-4-10 uk-float-left">
+                <div class="uk-width-medium-5-10 uk-float-left">
+                    <a href="/event_new" class="uk-width-1-1 uk-button uk-button-primary uk-button-large"><i class="uk-icon-lightbulb-o"></i>&nbsp;&nbsp;Schedule an Event</a>
+                </div>
+            </div>
+        
+        </div>
+        <br><br>
+        <!-- begin event row -->
+
+        <% @events.each_slice(3) do |events| %>
+                      
+               <div class="uk-grid" data-uk-grid-margin="">
+                    <% events.each do |event| %>
+                    <div class="uk-width-medium-1-3 uk-row-first">
+                            <a href="/events/<%= event.id %>">
+                            <div class="uk-width-6-6 highlightable">
+                            
+                                <h2 class="uk-h2 "><%= event.name %></h2>
+                                <div class="uk-grid">
+                                    <div class="uk-width-medium-5-10">
+                                        <p><i class="uk-icon-map-marker"></i>&nbsp;&nbsp;<%= event.location %></p>
+                                        <p><i class="uk-icon-bar-chart"></i>&nbsp;&nbsp;<%= event.attendees.count %> attendees</p>
+                                    </div>
+                                    <div class="uk-width-medium-5-10">
+                                         <p><i class="uk-icon-calendar-check-o"></i>&nbsp;&nbsp;<%= event.start.strftime("%B %e") %></p>
+                                        <p><i class="uk-icon-clock-o"></i>&nbsp;&nbsp;<%= event.start.strftime("%I:%M %p")%> - <%= event.end.strftime("%I:%M %p")%> </p>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                    </div>  
+                    <% end %>
+                </div>
+            
+        <% end %>
+        <!-- end event row -->
+    </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="uk-grid" data-uk-grid-margin>
+    
+    <div class="uk-width-medium-3-4">
+        <div class="uk-grid" data-uk-grid-margin>
+            <div class="uk-width-medium-8-10">
+              <h1 class="uk-heading-large"><%= @event.name%></h1>
+            </div>
+            <div class="uk-width-medium-2-10">
+    
+            </div>
+        </div>
+
+        <div class="uk-grid" data-uk-grid-margin>
+        	<div class="uk-width-4-6">
+                <% if can?(@current_user, :read, @event) %> 
+                  <div class="uk-grid">
+                        <div class="uk-width-medium-5-10">
+                          <p class="uk-text-large"><i class="uk-icon-map-marker"></i>&nbsp;&nbsp; <%= @event.location %></p>
+                          <p class="uk-text-large"><i class="uk-icon-bar-chart"></i>&nbsp;&nbsp;<%= event.attendees.count %> attendees</p>
+                        </div>
+                        <div class="uk-width-medium-5-10">
+                          <p class="uk-text-large"><i class="uk-icon-calendar-check-o"></i>&nbsp;&nbsp; <%= @event.start.strftime("%B %d") %> </p>
+                          <p class="uk-text-large"><i class="uk-icon-clock-o"></i>&nbsp;&nbsp;<%= event.start.strftime("%I:%M %p")%> - <%= event.end.strftime("%I:%M %p")%> </p>
+                        </div>
+                    </div>
+        		
+                <% end %>
+        	</div>
+            <div class="uk-width-2-6">
+
+            </div>
+        </div>
+
+
+        <div class="uk-grid" data-uk-grid-margin>
+            <div class="uk-width-medium-1-1">
+                <h2 id="getstarted">Attendees</h2>
+                <div class="uk-overflow-container">
+                    <table id="event_data" class="uk-table uk-text-nowrap ">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Andrew ID</th>
+                                <th>Checked In?</th>
+                                <th>Checked In By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <% @event.links(role:"attendee").each do |link| %>
+                              <% user = link.user %>
+                              <tr>
+                                  <td><%= user.fullname %></td>
+                                  <td><code><%= user.andrewid %></code></td>
+                                  <% if link.status %>
+                                    <td><%= link.updated_at.strftime('%H:%M (%m/%d/%y)') %></td>
+                                  <% else %>
+                                    <td> <div class="uk-badge uk-badge-warning">Not yet</div> </td>
+                                  <% end %>
+                                  <td></td>
+                              </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="uk-width-medium-1-4">
+      <div class="uk-panel uk-panel-box uk-responsive-height" style="height:100%">
+            <% unless can?(@current_user, [:manage, :modify], @event) %>
+                <form action="/events/<%= @event.id%>/register" method="POST">
+                <button type="submit" class="uk-width-1-1 uk-button uk-button-danger uk-button-large"><i class="uk-icon-pencil-square-o"></i>&nbsp;&nbsp;Register Now</button>
+                </form>
+            <% else %>
+                <a href="/events/<%= @event.id%>/edit" class="uk-width-1-1 uk-button uk-button-danger uk-button-large"><i class="uk-icon-cog"></i>&nbsp;&nbsp;Manage Event</a><br><br>
+                <a href="/events/<%= @event.id%>/designate_organizers" class="uk-width-1-1 uk-button uk-button-danger uk-button-large"><i class="uk-icon-users"></i>&nbsp;&nbsp;Organizers</a>
+
+            <% end %>
+            <h2 class="uk-text-primary">Facilitators</h2>
+              <% unless @event.creator.nil? %>
+                <p class="uk-text-bold"> Creator: <%= @event.creator.fullname %> </p>
+              <% end %>
+            <ul class="uk-list uk-list-line">
+                <% @event.links(role:"organizer").each do |organizer| %>
+                  <li> <%= organizer.user.fullname %> </li>
+                <% end %>
+                <% if @event.links(role:"organizer").empty? %>
+                  <li> No organizers yet... </li>
+                <% end %>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<%= js :event %>

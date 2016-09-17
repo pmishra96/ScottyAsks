@@ -1,0 +1,63 @@
+<h2> Hi <%= @current_user.firstname %>, let's schedule your event </h2>
+<hr class="uk-article-divider">
+
+<form class="uk-form uk-form-horizontal" action="/event_create" method="post">
+    
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="name">Event Name</label>
+        <div class="uk-form-controls">
+            <input type="text" id="form-h-it" class="uk-width-1-2" name="event[name]" value="<%= @event.name %>">
+        </div>
+    </div>
+
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="location">Location</label>
+        <div class="uk-form-controls uk-width-1-2 uk-autocomplete" style="display:inherit" data-uk-autocomplete="{source:'/location_pick.json'}">
+            <input type="text" id="form-h-it"   name="event[location]" value="<%= @event.location %>">
+        </div>
+    </div>
+    
+
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="description">Description</label>
+        <div class="uk-form-controls">
+            <textarea id="form-h-t" cols="30" rows="5" name="event[description]"><%= @event.description %></textarea>
+        </div>
+    </div>
+
+
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="date">Date</label>
+        <div class="uk-form-controls">
+             <input type="text" name="event[start_date]" data-uk-datepicker="{format:'YYYY-MM-DD', pos:'auto'}" value="<%= @event.start.strftime("%Y-%m-%d") unless @event.start.nil? %>">
+        </div>
+    </div>
+
+     <div class="uk-form-row">
+        <label class="uk-form-label">Time</label>
+        <div class="uk-form-controls">
+                <input type="text" name="event[start]" data-uk-timepicker="{format:'12h'}" value="<%= @event.start.strftime("%I:%M %p")  unless @event.start.nil?%>" placeholer="Start">&nbsp;&nbsp; to&nbsp;&nbsp;
+                <input type="text" name="event[end]" data-uk-timepicker="{format:'12h'}" value="<%= @event.end.strftime("%I:%M %p")  unless @event.end.nil?%>" placeholder="End">
+                
+        </div>
+    </div>
+
+
+    <div class="uk-form-row">
+        <div class="uk-form-controls">
+                <label><input name="event[public]" type="checkbox" <%= "checked" if @event.public %>>&nbsp;&nbsp;Public Event</label>
+        </div>
+    </div>
+
+
+    <div class="uk-form-row">
+        <div class="uk-form-controls">
+            <label class="uk-form-label" for="date">
+                <input type="submit" class="uk-button" value="Create Event"></input>
+            </label>
+        </div>
+    </div>
+
+</form>
+
+<%= js :event_form %>

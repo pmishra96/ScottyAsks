@@ -1,0 +1,65 @@
+<h2>Designate organizers for <a href="/events/<%=@event.id%>"><%= @event.name %></a></h2>
+<hr class="uk-article-divider">
+
+
+
+<div class="uk-grid">
+
+    <div class="uk-width-medium-3-4">
+        <div class="uk-grid" data-uk-grid-margin>
+            <div class="uk-width-medium-1-1">
+                <div class="uk-overflow-container">
+                    <table id="event_data" class="uk-table uk-text-nowrap ">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Andrew ID</th>
+                                <th>Current Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <% @users.each do |user| %>
+                              <% link = user.links(event:@event).first %>
+                              <% role = link.role unless link.nil? %>
+                              <tr>
+                                  <td><%= user.fullname %></td>
+                                  <td><code><%= user.andrewid %></code></td>
+                                  <td><%= role.blank? ? "None" : role  %></td>
+                                  <td>          
+                                    <% if role.blank? or role == "attendee" %>
+                                      <form id="make"> 
+                                        <input type="hidden" name="user_id" value="<%= user.id %>">
+                                        <input type="hidden" name="event_id" value="<%= @event.id %>">
+                                        <button id="make_organizer" class="uk-width-1-1 uk-button uk-button-danger uk-button-large">Make Organizer</button>
+                                      </form>
+                                    <% elsif role == "organizer"  %>
+                                      <form id="revoke"> 
+                                        <input type="hidden" name="user_id" value="<%= user.id %>">
+                                        <input type="hidden" name="event_id" value="<%= @event.id %>">
+                                        <button id="revoke_organizer" class="uk-width-1-1 uk-button uk-button-danger uk-button-large">Unset Organizer</button>
+                                      </form>
+                                      <% elsif role == "creator"  %>
+                                        <button  class="uk-width-1-1 uk-button uk-button-success uk-button-large">Creator</button>
+                                    <% end %>
+                                  </td>
+                              </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="uk-width-medium-1-4">
+        <div class="uk-panel uk-panel-box uk-responsive-height" style="height:100%">
+           <h2 class="uk-text-primary">Who are Organizers?</h2>
+        </div>
+    </div>
+    
+</div>
+
+<%= js :designate_organizers %>
+

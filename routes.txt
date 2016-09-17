@@ -1,0 +1,20 @@
+# this method creates a new user. all fields required
+post '/user/signup' do
+# send as: "{\"andrewid\":\"value\",\"password\":\"value\",\"nfctag\":\"value\"}"
+
+# authorizes user. attempt is password attempt
+post '/user/authorize' do
+# send as: "{\"andrewid\":\"value\",\"attempt\":\"value\"}"
+
+# checkin with event id and nfctag
+post '/event/checkin' do
+# send as: "{\"event_id\":\"value\",\"nfctag\":\"value\"}"
+
+post '/event/make-organizer' do
+# send as: "{\"event_id\":\"value\",\"nfctag\":\"value\"}"
+
+get "/event/get-checked-in/:eid" do
+# sub event id for :eid
+
+post "/event/getid" do
+# send as: "{\"event_name\":\"value\}"

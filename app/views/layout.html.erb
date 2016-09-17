@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NFC check in and event management made simple.">
+    <link rel="shortcut icon" href="/img/icon.ico">
+    <title>Check</title>
+    <style>
+      body {
+        font-family: 'Raleway', serif;
+      }
+      h1, h2, h3, h4, h5, h6, a {
+        font-family: 'Raleway', serif !important;
+      }
+      a {
+        text-decoration: none !important;
+      }
+      div.highlightable {
+        border: 3px solid #eee;
+        border-radius: 15px;
+            padding: 10px; 
+      }
+      div.highlightable:hover {
+        border: 3px solid rgba(107, 216, 255, 0.77);
+        border-radius: 15px;
+            padding: 10px; 
+      }
+    </style>
+    
+    <!-- styles and scripts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+    <%= css :application %>
+    <%= js :application %>
+</head>
+
+<body>
+ <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+
+            <nav class="uk-navbar uk-margin-large-bottom">
+                <a class="uk-navbar-brand uk-hidden-small uk-text-bold" href="/">Check</a>
+                <ul class="uk-navbar-nav uk-hidden-small">
+                    <li>
+                        <a href="/events">Events</a>
+                    </li>
+                    <li>
+                        <% if @current_user.nil? %>
+                            <a href="/login">Login</a>
+                        <% else %>
+                            <a href="/logout">Sign Out</a>
+                         <% end %>  
+                     </li>
+                  
+                </ul>
+                <div class="uk-navbar-flip">
+                <ul class="uk-navbar-nav">
+                        <% unless @current_user.nil? %>
+                        <li><a href="/users/<%= @current_user.id %>"><%= @current_user.fullname unless @current_user.nil? %></a></li>
+                        <% end %>
+                    </ul>
+                </div>
+                  
+                <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas=""></a>
+                <div class="uk-navbar-brand uk-navbar-center uk-visible-small uk-text-bold" href="/">Check</div>
+            </nav>
+
+             
+
+          <div id="offcanvas" class="uk-offcanvas">
+            <div class="uk-offcanvas-bar">
+                <ul class="uk-nav uk-nav-offcanvas">
+                    <li class="uk-active">
+                        <a href="/events">Events</a>
+                    </li>
+                    <li>
+                        <% if @current_user.nil? %>
+                            <a href="/login">Login</a>
+                        <% else %>
+                            <a href="/signout">Sign Out</a>
+                         <% end %>   
+                    </li>
+                    <!-- <li>
+                        <a href="layouts_blog.html">Blog</a>
+                    </li>
+                    <li>
+                        <a href="layouts_documentation.html">Documentation</a>
+                    </li>
+                    <li>
+                        <a href="layouts_contact.html">Contact</a>
+                    </li>
+                    <li>
+                        <a href="layouts_login.html">Login</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+
+        <% unless flash.keys.empty? %>
+        <% type = flash.keys[0] %>
+        <% message = flash[type.to_sym] %>
+        <div class="uk-alert <%= bootstrap_class_for(type) %>" data-uk-alert>
+        
+            <a href="" class="uk-alert-close uk-close"></a>
+            <p><%= message %></p>
+        
+        </div>
+        <% end %>
+
+
+
+
+    <%= yield %>
+
+
+</body>
+</html>
+

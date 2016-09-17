@@ -1,0 +1,55 @@
+<div class="uk-grid" data-uk-grid-margin="">
+
+    <div class="uk-width-medium-10-10 uk-row-first">
+        <h1 class="uk-text-primary"> <%= @user.fullname %></h1>
+
+        <% attended = @user.links.all(role:"attendee").count %>
+        <% facilitators = @user.links.all(role:"creator") | @user.links.all(role:"organizer") %>
+        <% organized = facilitators.count %>
+
+        <ul>
+            <li class="uk-text-primary"> Attended <%= attended %> event<% if attended != 1 %>s<%end%> </li>
+            <li class="uk-text-primary"> Organized <%= organized %> event<% if organized != 1 %>s<%end%> </li>
+        </ul>
+        <br>
+        <!-- begin event row -->
+
+        <% @user.links.each_slice(2) do |links| %>
+                      
+           <div class="uk-grid" data-uk-grid-margin="">
+                <% links.each do |link| %>
+                <div class="uk-width-medium-1-2 uk-row-first">
+                        <a href="/events/<%= link.event.id %>">
+                        <div class="uk-width-6-6  highlightable">
+                        
+                            <h2 class="uk-h2 "><%= link.event.name %></h2>
+                            <div class="uk-grid">
+                                <div class="uk-width-medium-5-10">
+                                    <p><i class="uk-icon-map-marker"></i>&nbsp;&nbsp;<%= link.event.location %></p>
+                                    <p><i class="uk-icon-bar-chart"></i>&nbsp;&nbsp;<%= link.event.attendees.count %> attendees</p>
+                                    <p><i class="uk-icon-users">&nbsp;&nbsp;<%= link.role.capitalize %></i></p>
+
+                                </div>
+                                <div class="uk-width-medium-5-10">
+                                    <p><i class="uk-icon-calendar-check-o"></i>&nbsp;&nbsp;<%= link.event.start.strftime("%B %e") %></p>
+                                    <p><i class="uk-icon-clock-o"></i>&nbsp;&nbsp;<%= link.event.start.strftime("%I:%M %p")%> - <%= link.event.end.strftime("%I:%M %p")%> </p>
+                                    <% if link.role == "attendee" %>
+                                        <% if link.status %>
+                                            <p><i class="uk-icon-check-square-o">&nbsp;&nbsp;<div class="uk-badge uk-badge-warning">Registered</div></i></p>
+                                        <% else %>
+                                            <p><div class="uk-badge uk-badge-large uk-badge-success"><i class="uk-icon-check-square-o"></i>&nbsp;&nbsp;Checked In</div></p>
+                                        <%end%>       
+                                    <%end%>
+                                </div>
+                            </div>
+
+                        </div>
+                        </a>
+                </div>  
+                <% end %>
+            </div>
+            
+        <% end %>
+        <!-- end event row -->
+    </div>
+</div>

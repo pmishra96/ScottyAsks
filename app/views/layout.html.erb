@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="NFC check in and event management made simple.">
+    <meta name="description" content="Ask questions to CMU students.">
     <link rel="shortcut icon" href="/img/icon.ico">
-    <title>Check</title>
+    <title>ScottyAsks</title>
     <style>
       body {
         font-family: 'Raleway', serif;
@@ -19,15 +19,15 @@
       div.highlightable {
         border: 3px solid #eee;
         border-radius: 15px;
-            padding: 10px; 
+            padding: 10px;
       }
       div.highlightable:hover {
         border: 3px solid rgba(107, 216, 255, 0.77);
         border-radius: 15px;
-            padding: 10px; 
+            padding: 10px;
       }
     </style>
-    
+
     <!-- styles and scripts -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
@@ -41,19 +41,11 @@
  <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
 
             <nav class="uk-navbar uk-margin-large-bottom">
-                <a class="uk-navbar-brand uk-hidden-small uk-text-bold" href="/">Check</a>
+                <a class="uk-navbar-brand uk-hidden-small uk-text-bold" href="/">ScottyAsks</a>
                 <ul class="uk-navbar-nav uk-hidden-small">
                     <li>
-                        <a href="/events">Events</a>
+                        <a href="/events">Start a Survey</a>
                     </li>
-                    <li>
-                        <% if @current_user.nil? %>
-                            <a href="/login">Login</a>
-                        <% else %>
-                            <a href="/logout">Sign Out</a>
-                         <% end %>  
-                     </li>
-                  
                 </ul>
                 <div class="uk-navbar-flip">
                 <ul class="uk-navbar-nav">
@@ -62,12 +54,12 @@
                         <% end %>
                     </ul>
                 </div>
-                  
+
                 <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas=""></a>
-                <div class="uk-navbar-brand uk-navbar-center uk-visible-small uk-text-bold" href="/">Check</div>
+                <div class="uk-navbar-brand uk-navbar-center uk-visible-small uk-text-bold" href="/">ScottyAsks</div>
             </nav>
 
-             
+
 
           <div id="offcanvas" class="uk-offcanvas">
             <div class="uk-offcanvas-bar">
@@ -80,7 +72,7 @@
                             <a href="/login">Login</a>
                         <% else %>
                             <a href="/signout">Sign Out</a>
-                         <% end %>   
+                         <% end %>
                     </li>
                     <!-- <li>
                         <a href="layouts_blog.html">Blog</a>
@@ -102,10 +94,10 @@
         <% type = flash.keys[0] %>
         <% message = flash[type.to_sym] %>
         <div class="uk-alert <%= bootstrap_class_for(type) %>" data-uk-alert>
-        
+
             <a href="" class="uk-alert-close uk-close"></a>
             <p><%= message %></p>
-        
+
         </div>
         <% end %>
 
@@ -117,4 +109,3 @@
 
 </body>
 </html>
-

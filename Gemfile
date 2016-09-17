@@ -19,6 +19,7 @@ gem 'mechanize'
 
 # for data mapper
 gem 'data_mapper'
+gem 'dm-tags'
 gem 'bcrypt'
 
 
@@ -33,5 +34,3 @@ end
 group :production do
 	gem 'dm-postgres-adapter'
 end
-
-

@@ -1,19 +1,12 @@
-<div class="uk-grid" data-uk-grid-margin="">
-    <div class="uk-width-medium-1-1 uk-row-first">
 
-        <div class="uk-vertical-align uk-text-center" style="background: url('/img/check_logo.png') no-repeat top / 100% border-box; height: 200px; background-position: center">
-        </div>
-
-    </div>
-</div>
-
-<hr class="uk-grid-divider">
+<!-- 
+<hr class="uk-grid-divider"> -->
 
 
 <div class="uk-grid" data-uk-grid-margin="">
 
     <div class="uk-width-medium-7-10 uk-row-first">
-        
+
         <div class="uk-grid" data-uk-grid-margin="">
             <div class="uk-width-medium-4-10">
                 <h1 class="uk-text-primary"> Latest Events</h1>
@@ -26,92 +19,17 @@
                 <i class="uk-icon-search"></i>
                 <input type="text" class="uk-form-large uk-width-1-1" placeholder="Search">
                 <script type="text/autocomplete">
-                    <ul class="uk-nav uk-nav-autocomplete uk-autocomplete-results">
-                        {{~items}}
-                        <li data-value="{{ $item.value }}">
-                            <a href="/events/{{ $item.id }}">
-                                {{ $item.value }}
-                                <div>{{{ $item.location }}}</div>
-                            </a>
-                        </li>
-                        {{/items}}
-                    </ul>
+
                 </script>
             </div>
             </div>
         </div>
         <br><br>
-        
-        <!-- begin event row -->
 
-
-        <ul class="uk-grid uk-grid-width-1-2" data-uk-grid-margin="" data-uk-scrollspy="{cls:'uk-animation-fade', target:'.event-panels', delay:300}">
-            <% @events.each do |event| %>
-            <li>
-                <a class="uk-panel uk-panel-hover" href="/events/<%= event.id %>">
-
-                    <div class="uk-grid">
-                        <div class="uk-width-medium-8-10">
-                            <h2 class="uk-h2 "><%= event.name %></h2>
-                        </div>
-                        <div class="uk-width-medium-2-10">
-                            <div class="uk-panel-badge uk-badge <%= uk_badge_for(event)%>"><%= event.public ? "Public":"Private"%>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="uk-grid">
-                        <div class="uk-width-medium-5-10">
-                            <p><i class="uk-icon-map-marker"></i>&nbsp;&nbsp;<%= event.location %></p>
-                            <p><i class="uk-icon-bar-chart"></i>&nbsp;&nbsp;<%= event.attendees.count %> attendees</p>
-                        </div>
-                        <div class="uk-width-medium-5-10">
-                            <p><i class="uk-icon-calendar-check-o"></i>&nbsp;&nbsp;<%= event.start.strftime("%B %e") %></p>
-                            <p><i class="uk-icon-clock-o"></i>&nbsp;&nbsp;<%= event.start.strftime("%I:%M %p")%> - <%= event.end.strftime("%I:%M %p")%> </p>
-                        </div>
-                    </div>
-
-                </a>
-            </li>
-            <% end %>
-
-        </ul>
-            
-       
-        <!-- end event row -->
     </div>
 
-    <div class="uk-width-medium-3-10 ">
-        <div class="uk-panel uk-panel-box uk-box-primary">
-            <h2 class="uk-text-bold">Start Here!</h2>
-            <ul class="uk-nav uk-nav-side">
-                <li class="uk-text-bold"><a href="/events">View All Events</a></li>
-                <li class="uk-text-bold"><a href="/login">Login to View Private Events</a></li>
-            </ul>
-            <h2 class="uk-text-large">Why Check?</h2>
-            <ul class="uk-list uk-list-line">
-                <li> 
-                    We believe that a great education is just one big discussion. When students
-                    come together and collaborate, whether in small groups or large auditoriums,
-                    they can best further information learned in the classroom. Check enables students
-                    and administrators to efficiently organize and manage campus events, hassle free.
-                </li>
-                <li>
-                    Through the Check mobile application, organizers can register and check-in attendees with their existing ID cards through NFC technology. 
-                </li>
-                <li> 
-                    Event attendance and other data can be managed securely through the Check web application (what you're looking at right now!).
-                </li>
-            </ul>
-        </div>
-    </div>
+
 
 </div>
 
 <!-- end events and desc -->
-
-
-
-
-
-

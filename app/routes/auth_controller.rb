@@ -1,4 +1,4 @@
-class Check < Sinatra::Base
+class ScottyAsks < Sinatra::Base
 
  # login (go to login page)
   get "/login" do
@@ -46,8 +46,8 @@ class Check < Sinatra::Base
     user = User.new(andrewid:andrewid, password:payload["password"], nfctag:payload["nfctag"])
     user.set_params
     if user.save
-      Pony.mail(:to => "#{user.andrewid}@andrew.cmu.edu", 
-                :subject => 'Welcome to Check', 
+      Pony.mail(:to => "#{user.andrewid}@andrew.cmu.edu",
+                :subject => 'Welcome to Check',
                 :html_body => "hello there")
       return [200, [user.to_json]]
     else

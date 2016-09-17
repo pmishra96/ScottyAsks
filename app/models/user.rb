@@ -1,51 +1,57 @@
+require 'httparty'
 class User
   include DataMapper::Resource
-  include BCrypt
 
-  has n, :links
-  has n, :events, :through => :links
+  has n, :questions, :through => Resource
+
+  has_tags_on :hashtags
 
   property :id, Serial, :key => true
-  property :andrewid, String, :length => 3..50
-  property :password, BCryptHash
-  property :firstname, String
-  property :lastname, String
-  property :nfctag, String
+  property :andrewID, String, :length => 3..50
+  property :fbid, String
+  property :first_name, String
+  property :last_name, String
+  property :btc_value, Float, default:0
+  property :btc_address, String, default:"0x00000"
+  property :email, String
+  property :campus, String
+  property :department, String
+  property :affiliation, String
+  property :student_level, String
+  property :student_class, String
+  property :job_title, String
+  property :office, String
 
-  validates_presence_of :nfctag, :andrewid, :password
-  validates_uniqueness_of :andrewid, :nfctag
-  validates_with_method :is_valid_user
+  validates_presence_of :andrewID, :fbid
+  validates_uniqueness_of :andrewID
 
 
   def set_params
-  	dapi = DirectoryAPI.new
-  	full = dapi.get_fullname(self.andrewid).split(" ")
-  	self.firstname = full.first
-  	self.lastname = full.last
+    user_data = HTTParty.get("http://apis.scottylabs.org/directory/v1/andrewID/#{self.andrewID}")
+    user_data.each do |key, value|
+      if User.method_defined?(key.to_sym)
+        self.send("#{key}=", value)
+      end
+    end
+    self.btc_value = 0.0
+    self.btc_address = 0x1efcdba
   end
 
-  def authenticate(attempted_password)
-  	return (self.password == attempted_password)
+  def set_default_hashtags
+    tags = [self.department,
+            self.student_level,
+            self.student_class,
+            self.campus]
+    self.hashtag_list = tags
   end
 
   def fullname
-  	return (self.firstname + " " + self.lastname)
+  	return (self.first_name + " " + self.last_name)
   end
 
-  # model validation, checks directory
-  def is_valid_user
-  	dapi = DirectoryAPI.new
-  	if dapi.verify_user_exists(self.andrewid)
-  		return true
-  	else
-  		[ false, "#{andrewid} is not a valid andrewid" ]
-  	end
-  end
 
-  # does user have a given role for an event
-  def is_role_for(role, event)
-    return self.links(event:event).role == role
-  end
+
+
 
 
 end

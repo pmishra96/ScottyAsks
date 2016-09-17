@@ -47,6 +47,8 @@ GEM
     dm-sqlite-adapter (1.2.0)
       dm-do-adapter (~> 1.2.0)
       do_sqlite3 (~> 0.10.6)
+    dm-tags (1.2.0)
+      dm-core (~> 1.2.0)
     dm-timestamps (1.2.0)
       dm-core (~> 1.2.0)
     dm-transactions (1.2.0)
@@ -152,6 +154,7 @@ DEPENDENCIES
   data_mapper
   dm-postgres-adapter
   dm-sqlite-adapter
+  dm-tags
   eventmachine
   httparty
   mechanize
@@ -163,5 +166,8 @@ DEPENDENCIES
   sinatra-assetpack
   sinatra-websocket
 
+RUBY VERSION
+   ruby 2.2.2p95
+
 BUNDLED WITH
-   1.10.6
+   1.13.1

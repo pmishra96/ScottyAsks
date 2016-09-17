@@ -6,7 +6,7 @@ require 'pony'
 require 'json'
 require 'erb'
 
-class Check < Sinatra::Base
+class ScottyAsks < Sinatra::Base
 
   configure :production, :development do
     # logging
@@ -22,18 +22,18 @@ class Check < Sinatra::Base
     # sockets
     set :sockets, []
     #email
-    Pony.options = { 
-      :from => 'check.cmu.notify@gmail.com', 
-      :via => :smtp, 
-      :via_options => { 
+    Pony.options = {
+      :from => 'check.cmu.notify@gmail.com',
+      :via => :smtp,
+      :via_options => {
         :address              => 'smtp.gmail.com',
         :port                 => '587',
         :enable_starttls_auto => true,
         :user_name            => 'check.cmu.notify',
         :password             => ENV["CHECKMAILPASS"],
-        :authentication       => :plain, 
-        :domain               => "localhost.localdomain" 
-      } 
+        :authentication       => :plain,
+        :domain               => "localhost.localdomain"
+      }
     }
   end
 
@@ -110,7 +110,7 @@ class Check < Sinatra::Base
 
     # end
 
-    
+
 
     # ex. if can?(@user, :read, @event)
     # :read => only look at stuff
